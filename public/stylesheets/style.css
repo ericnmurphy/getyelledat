@@ -5,4 +5,7 @@ body {
 a {
   color: #2495c1; }
 
+.option-disabled {
+  display: none; }
+
 /*# sourceMappingURL=style.css.map */

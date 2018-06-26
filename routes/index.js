@@ -1,5 +1,5 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -7,10 +7,19 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function (req, res) {
+  res.render('sign-up', {
+    name: req.body.name,
+    email: req.body.email,
+    goal: req.body.goal
+  });
+});
+
+router.get('/sign-up', function(req, res) {
+  res.render('/sign-up');
+});
+
+router.post('/sign-up', function (req, res) {
   console.log(req.body.name);
-  console.log(req.body.email);
-  console.log(req.body.goal);
-  // res.render('the_template', { name: req.body.name });
 });
 
 module.exports = router;

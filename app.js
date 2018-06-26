@@ -7,7 +7,10 @@ const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/getyelledat');
+//keys
+const keys = require('./config/keys');
+
+mongoose.connect(keys.mongoURI);
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
