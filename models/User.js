@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 //create schema
 const UserSchema = new Schema({
-  firstName: {
+  name: {
     type: String,
     required: true
   },
@@ -30,7 +30,15 @@ const UserSchema = new Schema({
   timeZone: {
     type: String,
     required: true
+  },
+  joinDate: {
+    type: Date,
+    default: Date.Now
+  },
+  verified: {
+    type: Boolean,
+    default: false
   }
 });
 
-module.model('users', UserSchema);
+mongoose.model('users', UserSchema);

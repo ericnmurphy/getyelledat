@@ -1,8 +1,8 @@
 <p>Hey {{name}}, thanks for signing up 👍 Just a little more information to pair you up with the right person.</p>
 
-<form action="/sign-up" method="post">
+<form action="/sendtoken" method="post">
   <input type="hidden" name="name" value="{{name}}">
-  <input type="hidden" name="email" value="{{email}}">
+  <input type="hidden" name="user" value="{{email}}">
   <input type="hidden" name="goal" value="{{goal}}">
   <div>
     <label for="category">Category of Goal</label>
@@ -39,8 +39,8 @@
     </select>
   </div>
   <div>
-    <label for="time">Time Zone</label>
-    <select name="time">
+    <label for="timezone">Time Zone</label>
+    <select name="timezone">
       <option class="option-disabled" disabled selected value></option>
       <option value="-12">(GMT -12:00) Eniwetok, Kwajalein</option>
       <option value="-11">(GMT -11:00) Midway Island, Samoa</option>
