@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
 const session = require('express-session');
+const flash = require('connect-flash')
 const passwordless = require('passwordless');
 const MongoStore = require('passwordless-mongostore');
 const email = require("emailjs");
@@ -49,7 +50,7 @@ passwordless.addDelivery(
           text:    'Hello!\nAccess your account here: http://'
           + host + '?token=' + tokenToSend + '&uid='
           + encodeURIComponent(uidToSend),
-          from:    'eric@ericnmurphy.com',
+          from:    'ericnmurphy@gmail.com',
           to:      recipient,
           subject: 'Token for ' + host
       }, function(err, message) {
@@ -82,6 +83,13 @@ if (app.get('env') === 'production') {
 }
 
 app.use(session(sess));
+
+//express messages
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
+  next();
+});
 
 //passwordless middleware
 app.use(passwordless.sessionSupport());

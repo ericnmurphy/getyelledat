@@ -6,17 +6,24 @@
 <p>Drop your email below and what you're trying to accomplish, and you'll be matched with someone to keep you accountable for the next 30 days. All you have to do is yell at them in return so you can both get shit done.</p>
 
 <form action="/" method="post">
+  {{#each errors}}
+
+  <div class="error">
+  {{{this}}}
+  </div>
+
+  {{/each}}
   <div>
     <label for="name">First name</label>
     <input name="name" type="text">
   </div>
   <div>
-    <label for="email">Email</label>
-    <input name="email" type="text">
+    <label for="user">Email</label>
+    <input name="user" type="text">
   </div>
   <div>
     <label for="goal">What is one goal you're trying to accomplish in the next 30 days?</label>
-    <textarea name="goal"></textarea>
+    <textarea name="goal" placeholder="I want to..."></textarea>
   </div>
   <input type="submit" value="Get after it">
 </form>
