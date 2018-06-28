@@ -22,9 +22,10 @@ router.get('/sign-up', function(req, res) {
 });
 
 router.post('/sign-up', function (req, res) {
+
   const newUser = {
     name: req.body.name,
-    email: req.body.email,
+    email: req.body.user,
     goal: req.body.goal,
     category: req.body.category,
     gender: req.body.gender,
@@ -33,13 +34,39 @@ router.post('/sign-up', function (req, res) {
   }
 
   new User(newUser)
-    .save()
-    .then(user => {
-      res.redirect('/register');
-    });
-});
+    .save();
+
+  }, passwordless.requestToken(
+    // Simply accept every user
+    function(user, delivery, callback) {
+      callback(null, user);
+      // usually you would want something like:
+      // User.find({email: user}, callback(ret) {
+      // 		if(ret)
+      // 			callback(null, ret.id)
+      // 		else
+      // 			callback(null, null)
+      // })
+    }));
 
 router.post('/sendtoken',
+  function(req, res, next) {
+    const newUser = {
+      name: req.body.name,
+      email: req.body.user,
+      goal: req.body.goal,
+      category: req.body.category,
+      gender: req.body.gender,
+      age: req.body.age,
+      timeZone: req.body.timezone
+    }
+
+    new User(newUser)
+    .save();
+
+    //next function baby
+    next();
+  },
 	passwordless.requestToken(
 		// Simply accept every user
 		function(user, delivery, callback) {
@@ -53,7 +80,7 @@ router.post('/sendtoken',
 			// })
 		}),
 	function(req, res) {
-  		res.render('sent');
+  		res.render('welcome');
 });
 
 router.get('/welcome', passwordless.restricted(), function(req, res) {
