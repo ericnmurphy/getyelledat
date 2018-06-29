@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const sassMiddleware = require('node-sass-middleware');
+const hbs = require('hbs');
 const session = require('express-session');
 const flash = require('connect-flash')
 const passwordless = require('passwordless');
@@ -29,10 +30,14 @@ require('./models/User');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
+//handlebars helpers
+const hbsHelpers = require('./helpers/hbs');
+hbs.registerHelper('select', hbsHelpers.select);
+
 const app = express();
 
 //smtp setup
-var smtpServer  = email.server.connect({
+var smtpServer = email.server.connect({
   user: 'ericnmurphy@gmail.com',
   password: 'aeuycsryqbfrppig',
   host: 'smtp.gmail.com',

@@ -1,32 +1,44 @@
-<header class="jumbotron">
-  <h1>Welcome. Need to get off your ass? Pair up with someone and get yelled at until you get shit done.</h1>
+<header class="block">
+  <div class="columns">
+    <div class="column is-9">
+      <h1 class="title">Need to get off your ass? Pair up with someone and get yelled at until you get shit done.</h1>
+      <p class="subtitle is-4">Trying to hit the gym consistently? Start the business you've always wanted to? Write a blog post every day?</p>
+      <p class="content">Drop your email below and what you're trying to accomplish, and you'll be matched with someone to keep you accountable for the next 30 days. All you have to do is yell at them in return so you can both get shit done.</p>
+    </div>
+  </div>
 </header>
-<p>Trying to hit the gym consistently? Start the business you've always wanted to? Write a blog post every day?</p>
 
-<p>Drop your email below and what you're trying to accomplish, and you'll be matched with someone to keep you accountable for the next 30 days. All you have to do is yell at them in return so you can both get shit done.</p>
+<div class="block">
+  <div class="columns">
+    <div class="column is-5">
+      <form action="/" method="post">
+        {{#each errors}}
 
-<form action="/" method="post">
-  {{#each errors}}
+        <div class="notification is-warning">
+        {{{this}}}
+        </div>
 
-  <div class="error">
-  {{{this}}}
+        {{/each}}
+        <div class="field">
+          <label class="label" for="name">First name</label>
+          <input name="name" type="text" class="input">
+        </div>
+        <div class="field">
+          <label class="label" for="user">Email</label>
+          <input name="user" type="text" class="input">
+        </div>
+        <div class="field">
+          <label class="label" for="goal">What is one goal you're trying to accomplish in the next 30 days?</label>
+          <p class="control">
+            <textarea name="goal" class="textarea" placeholder="I want to..."></textarea>
+          </p>
+        </div>
+        <input class="button is-primary" type="submit" value="Get after it">
+      </form>
+    </div>
   </div>
+</div>
 
-  {{/each}}
-  <div>
-    <label for="name">First name</label>
-    <input name="name" type="text">
-  </div>
-  <div>
-    <label for="user">Email</label>
-    <input name="user" type="text">
-  </div>
-  <div>
-    <label for="goal">What is one goal you're trying to accomplish in the next 30 days?</label>
-    <textarea name="goal" placeholder="I want to..."></textarea>
-  </div>
-  <input type="submit" value="Get after it">
-</form>
 <footer>
   <p>Made by <a href="https://ericnmurphy.com/">Eric Murphy</a></p>
 </footer>

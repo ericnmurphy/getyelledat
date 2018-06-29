@@ -33,11 +33,13 @@ const UserSchema = new Schema({
   },
   joinDate: {
     type: Date,
-    default: Date.Now
+    default: Date.now,
+    required: true
   },
   verified: {
     type: Boolean,
-    default: false
+    default: false,
+    required: true
   }
 });
 
