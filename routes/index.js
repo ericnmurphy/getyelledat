@@ -54,6 +54,59 @@ router.get('/sign-up', function(req, res) {
   res.render('sign-up');
 });
 
+router.get('/login', function(req, res) {
+  res.render('login');
+});
+
+router.post('/login', [
+  body('user').isEmail().withMessage('Enter a valid email.').custom((value, {req}) => {
+    return new Promise((resolve, reject) => {
+      User.findOne({email:req.body.user}, function(err, user){
+        if(err) {
+          reject(new Error('Server Error'))
+        }
+        if(!Boolean(user)) {
+          reject(new Error(`E-mail not registered. If you need to sign up, you can do so <a href="/">here</a>.`))
+        }
+        resolve(true)
+      });
+    });
+  }).normalizeEmail()
+],
+  function(req, res, next) {
+  const validationErrors = validationResult(req);
+    let errors = [];
+    if(!validationErrors.isEmpty()) {
+      Object.keys(validationErrors.mapped()).forEach(field => {
+        errors.push(validationErrors.mapped()[field]['msg']);
+      });
+    }
+
+    if(errors.length){
+      console.log(errors);
+      res.render('login', {
+        errors: errors
+      });
+    } else {
+      next();
+    }
+  },
+	passwordless.requestToken(
+		// Simply accept every user
+		function(user, delivery, callback) {
+			callback(null, user);
+			// usually you would want something like:
+			// User.find({email: user}, callback(ret) {
+			// 		if(ret)
+			// 			callback(null, ret.id)
+			// 		else
+			// 			callback(null, null)
+			// })
+		}),
+	function(req, res) {
+  		res.render('pair', {name: req.body.name, email: req.body.user});
+});
+
 router.post('/sendtoken', [
   body('name').not().isEmpty().withMessage('You have to enter a name, vro.').trim().escape(),
   body('user').isEmail().withMessage('Don\'t think that\'s a valid email 🤔').custom((value, {req}) => {
@@ -128,6 +181,10 @@ router.post('/sendtoken', [
 		}),
 	function(req, res) {
   		res.render('verify', {name: req.body.name, email: req.body.user});
+});
+
+router.get('/pair', passwordless.restricted(), function(req, res) {
+  res.render('pair', { user: req.user });
 });
 
 router.get('/welcome', passwordless.restricted(), function(req, res) {

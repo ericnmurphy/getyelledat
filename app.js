@@ -98,7 +98,7 @@ app.use(function (req, res, next) {
 
 //passwordless middleware
 app.use(passwordless.sessionSupport());
-app.use(passwordless.acceptToken({ successRedirect: '/'}));
+app.use(passwordless.acceptToken({ successRedirect: '/pair'}));
 
 app.use(logger('dev'));
 app.use(express.json());
