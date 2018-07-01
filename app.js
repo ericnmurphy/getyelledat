@@ -112,6 +112,7 @@ app.use(function(req, res, next) {
         next();
       });
   } else {
+    app.locals.user = null;
     next();
   }
 });

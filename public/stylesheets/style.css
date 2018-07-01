@@ -1,4 +1,7 @@
 .option-disabled {
   display: none; }
 
+.navbar .navbar-item {
+  padding: .5rem .75rem .5rem 0; }
+
 /*# sourceMappingURL=style.css.map */

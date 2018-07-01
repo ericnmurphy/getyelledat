@@ -5,5 +5,5 @@
 		"style.sass"
 	],
 	"names": [],
-	"mappings": "AAaA,AAAA,gBAAgB,CAAC;EACf,OAAO,EAAE,IAAI,GAAG"
+	"mappings": "AAaA,AAAA,gBAAgB,CAAC;EACf,OAAO,EAAE,IAAI,GAAG;;AAElB,AAAA,OAAO,CAAC,YAAY,CAAC;EACnB,OAAO,EAAE,oBAAoB,GAAG"
 }

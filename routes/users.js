@@ -145,4 +145,10 @@ router.get('/verify', ensureGuest, function(req, res) {
   res.redirect('/');
 });
 
+//GET logout
+router.get('/logout', passwordless.logout(),
+  function(req, res) {
+    res.redirect('/');
+});
+
 module.exports = router;
