@@ -4,9 +4,10 @@ const mongoose = require('mongoose');
 const passwordless = require('passwordless');
 const { body, validationResult } = require('express-validator/check');
 const User = mongoose.model('users');
+const { ensureGuest } = require('../helpers/auth');
 
 //GET login
-router.get('/login', function(req, res) {
+router.get('/login', ensureGuest, function(req, res) {
   res.render('users/login');
 });
 
@@ -136,12 +137,12 @@ router.post('/verify', [
   		res.render('users/verify', {register: true, name: req.body.name, email: req.body.user});
 });
 
-router.get('/pair', passwordless.restricted(), function(req, res) {
-  res.render('pair', { user: req.user });
+router.get('/sign-up', ensureGuest, function(req, res) {
+  res.redirect('/');
 });
 
-router.get('/welcome', passwordless.restricted(), function(req, res) {
-  res.render('welcome', { user: req.user });
+router.get('/verify', ensureGuest, function(req, res) {
+  res.redirect('/');
 });
 
 module.exports = router;

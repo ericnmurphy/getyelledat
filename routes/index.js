@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const passwordless = require('passwordless');
 const { body, validationResult } = require('express-validator/check');
 const User = mongoose.model('users');
+const { ensureGuest, ensureAuthenticated } = require('../helpers/auth');
 
 // GET home page.
-router.get('/', function(req, res) {
-  if(req.user){
-    res.render('index');
-  } else {
-    res.render('users/login');
-  }
+router.get('/', ensureGuest, function(req, res) {
+  res.render('index');
 });
 
 // POST home page
@@ -52,6 +50,11 @@ router.post('/sign-up', [
       goal: req.body.goal
     });
   }
+});
+
+//GET dashboard
+router.get('/dashboard', ensureAuthenticated, function(req, res) {
+  res.render('dashboard');
 });
 
 module.exports = router;
