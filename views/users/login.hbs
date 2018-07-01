@@ -10,13 +10,7 @@
   <div class="columns">
     <div class="column is-5">
       <form action="/login" method="post">
-        {{#each errors}}
-
-        <div class="notification is-warning">
-        {{{this}}}
-        </div>
-
-        {{/each}}
+        {{> _errors}}
         <div class="field">
           <label class="label" for="user">Email</label>
           <input name="user" type="text" class="input">

@@ -26,6 +26,7 @@ db.once('open', function() {
 
 //require User model
 require('./models/User');
+const User = mongoose.model('users');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -33,6 +34,8 @@ const usersRouter = require('./routes/users');
 //handlebars helpers
 const hbsHelpers = require('./helpers/hbs');
 hbs.registerHelper('select', hbsHelpers.select);
+//register handlebars partials
+hbs.registerPartials(__dirname + '/views/partials');
 
 const app = express();
 
@@ -98,7 +101,20 @@ app.use(function (req, res, next) {
 
 //passwordless middleware
 app.use(passwordless.sessionSupport());
-app.use(passwordless.acceptToken({ successRedirect: '/pair'}));
+app.use(passwordless.acceptToken({ successRedirect: '/'}));
+
+//set global user var
+app.use(function(req, res, next) {
+  console.log(req.user);
+  if(req.user) {
+      User.findOne({email: req.user}, function(error, user) {
+        app.locals.user = user;
+        next();
+      });
+  } else {
+    next();
+  }
+});
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -110,10 +126,12 @@ app.use(sassMiddleware({
   indentedSyntax: true, // true = .sass and false = .scss
   sourceMap: true
 }));
+
+//set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

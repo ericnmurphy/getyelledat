@@ -10,15 +10,9 @@
 <div class="block">
   <div class="columns">
     <div class="column is-5">
-      {{#each errors}}
+      {{> _errors}}
 
-      <div class="notification is-warning">
-        {{{this}}}
-      </div>
-
-      {{/each}}
-
-      <form action="/sendtoken" method="post">
+      <form action="/verify" method="post">
         <input type="hidden" name="name" value="{{name}}">
         <input type="hidden" name="user" value="{{user}}">
         <input type="hidden" name="goal" value="{{goal}}">
